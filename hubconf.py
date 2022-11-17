@@ -1,6 +1,7 @@
 dependencies = ['torch', 'torchaudio']
 import torch
 import json
+import warnings
 from utils_vad import (init_jit_model,
                        get_speech_timestamps,
                        get_number_ts,
@@ -29,7 +30,7 @@ def silero_vad(onnx=False, force_onnx_cpu=False):
         installed_version = torch.__version__
         supported_version = '1.12.0'
         if versiontuple(installed_version) < versiontuple(supported_version):
-            raise Exception(f'Please install torch {supported_version} or greater ({installed_version} installed)')
+            warnings.warn(f'Please install torch {supported_version} or greater ({installed_version} installed)')
 
     hub_dir = torch.hub.get_dir()
     if onnx:
