@@ -20,11 +20,12 @@ def silero_vad(onnx=False, force_onnx_cpu=False):
     Returns a model with a set of utils
     Please see https://github.com/snakers4/silero-vad for usage examples
     """
-    hub_dir = torch.hub.get_dir()
+    model_dir = os.path.join(os.path.dirname(__file__), 'files')
     if onnx:
-        model = OnnxWrapper(f'{hub_dir}/elsa_silero-vad_master/files/silero_vad.onnx', force_onnx_cpu)
+        model = OnnxWrapper(os.path.join(model_dir, 'silero_vad.onnx'), force_onnx_cpu)
     else:
-        model = init_jit_model(model_path=f'{hub_dir}/elsa_silero-vad_master/files/silero_vad.jit')
+        model = init_jit_model(os.path.join(model_dir, 'silero_vad.jit'))
+
     utils = (get_speech_timestamps,
              save_audio,
              read_audio,
